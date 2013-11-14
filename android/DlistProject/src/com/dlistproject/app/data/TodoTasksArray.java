@@ -21,7 +21,11 @@ public class TodoTasksArray
   {
     todoTasks = new ArrayList<TodoTask>();
     headers = new ArrayList<String>();
-    setTodoList(inputStream, todoTasks, headers);
+
+    if(inputStream != null)
+    {
+      setTodoList(inputStream, todoTasks, headers);
+    }
   }
 
   public List<String> getHeaders()
@@ -37,6 +41,11 @@ public class TodoTasksArray
   public int getCount()
   {
     return todoTasks.size();
+  }
+
+  public boolean isEmpty()
+  {
+    return todoTasks.isEmpty();
   }
 
   public void setTodoList(FileInputStream inputStream, List<TodoTask> todoTasks,
