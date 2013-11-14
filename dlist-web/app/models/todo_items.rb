@@ -30,6 +30,11 @@ class TodoItems < Array
     persist
   end
 
+  def update(id, params)
+    self[id] = TodoItem.new(params)
+    persist
+  end
+
   private
   def populate(content)
     CSV.parse(content, :headers => true) do |row|

@@ -7,13 +7,18 @@ class TodoItem
   attr_accessor :attachment, :geo_remind_at, :assigned_to, :priority, :remind_at, :status, :title, :created_at
 
   def initialize(params = {})
-    @title = params["title"]
-    @status = params["status"]
-    @assigned_to = params["assigned to"]
-    @priority = params["priority"]
-    @remind_at = params["remind at"]
-    @geo_remind_at = params["geo remind at"]
-    @created_at = DateTime.now.strftime('%d/%m/%y %H:%M')
+    normalized_hash = {}
+    params.each do |k, v|
+      normalized_hash[k.gsub(' ', '_')] = v
+    end
+
+    @title = normalized_hash["title"]
+    @status = normalized_hash["status"]
+    @assigned_to = normalized_hash["assigned_to"]
+    @priority = normalized_hash["priority"]
+    @remind_at = normalized_hash["remind_at"]
+    @geo_remind_at = normalized_hash["geo_remind_at"]
+    @created_at = normalized_hash["created_at"].present? ? normalized_hash["created_at"] : DateTime.now.strftime('%d/%m/%y %H:%M')
   end
 
   def persisted?

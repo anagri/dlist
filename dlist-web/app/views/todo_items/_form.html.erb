@@ -1,4 +1,4 @@
-<%= form_for(@todo_item) do |f| %>
+<%= form_for @todo_item, :url => url_for(:action => params[:action] == 'new' ? 'create' : 'update'), :method => params[:action] == 'new' ? 'post' : 'put' do |f| %>
   <% if @todo_item.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@todo_item.errors.count, "error") %> prohibited this todo_item from being saved:</h2>
@@ -21,11 +21,11 @@
   </div>
   <div class="field">
     <%= f.label :priority %><br />
-    <%= f.select :priority, TodoItem.priorities, :selected => 'Medium' %>
+    <%= f.select :priority, TodoItem.priorities, :selected => f.object.priority.present? ? f.object.priority : 'Medium' %>
   </div>
   <div class="field">
     <%= f.label :status %><br />
-    <%= f.select :status, TodoItem.statuses, :selected => 'Pending' %>
+    <%= f.select :status, TodoItem.statuses, :selected => f.object.status.present? ? f.object.status : 'Pending' %>
   </div>
   <div class="field">
     <%= f.label :remind_at, 'Remind At' %><br />
@@ -33,7 +33,7 @@
   </div>
   <div class="field">
     <%= f.label :geo_remind_at %><br />
-    <%= f.select :geo_remind_at, TodoItem.geo_reminders, :selected => 'None' %>
+    <%= f.select :geo_remind_at, TodoItem.geo_reminders, :selected => f.object.geo_remind_at.present? ? f.object.geo_remind_at : 'None' %>
   </div>
   <div class="field">
     <%= f.label :attachment %><br />

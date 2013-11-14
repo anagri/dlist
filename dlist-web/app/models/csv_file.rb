@@ -14,7 +14,14 @@ class CsvFile < ActiveRecord::Base
 
   def updated_remotely?
     client = DropboxClient.new(@current_user.access_token)
-    csv_file = client.get_file_and_metadata('todo_items.csv')
+
+    begin
+      csv_file = client.get_file_and_metadata('todo_items.csv')
+    rescue DropboxError => e
+      client.put_file('todo_items.csv', TodoItem.headers.join(','))
+      csv_file = client.get_file_and_metadata('todo_items.csv')
+    end
+
     orig_csv_file = CsvFile.find(@current_user.uid)
 
     if orig_csv_file.revision != csv_file[1]["revision"].to_i

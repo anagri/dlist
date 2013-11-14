@@ -13,17 +13,6 @@ class TodoItemsController < ApplicationController
     end
   end
 
-  # GET /todo_items/1
-  # GET /todo_items/1.json
-  def show
-    @todo_item = all_items[params[:id]]
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @todo_item }
-    end
-  end
-
   # GET /todo_items/new
   # GET /todo_items/new.json
   def new
@@ -37,7 +26,7 @@ class TodoItemsController < ApplicationController
 
   # GET /todo_items/1/edit
   def edit
-    @todo_item = all_items[params[:id]]
+    @todo_item = all_items[params[:id].to_i]
   end
 
   # POST /todo_items
@@ -59,11 +48,9 @@ class TodoItemsController < ApplicationController
   # PUT /todo_items/1
   # PUT /todo_items/1.json
   def update
-    @todo_item = all_items[params[:id]]
-
     respond_to do |format|
-      if @todo_item.update_item(current_user, params[:todo_item])
-        format.html { redirect_to @todo_item, notice: 'Todo item was successfully updated.' }
+      if all_items.update(params[:id].to_i, params[:todo_item])
+        format.html { redirect_to url_for(:action => :show, :id => params[:id]), notice: 'Todo item was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
