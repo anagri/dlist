@@ -21,18 +21,16 @@ class LoginController < ApplicationController
 
       begin
         csv_file = client.get_file_and_metadata('todo_items.csv')
-        CsvFile.where(:uid => session[:uid]).first_or_create!(:content => csv_file[0], :revision => csv_file[1]["revision"])
       rescue DropboxAuthError => e
         clear_dropbox_auth
         logger.info "Dropbox auth error: #{e}"
         render :text => "Dropbox auth error"
         return
       rescue DropboxError => e
-        client.put_file('todo_items.csv', 'title,status,assigned to,priority,remind at,geo remind at,attachments,created by,created at')
-
+        client.put_file('todo_items.csv', TodoItem.headers.join(','))
         csv_file = client.get_file_and_metadata('todo_items.csv')
-        CsvFile.where(:uid => session[:uid]).first_or_create!(:content => csv_file[0], :revision => csv_file[1]["revision"])
       end
+      CsvFile.where(:uid => session[:uid]).first_or_create!(:content => csv_file[0], :revision => csv_file[1]["revision"])
 
       redirect_to :controller => 'todo_items', :action => 'index'
     rescue DropboxOAuth2Flow::BadRequestError => e

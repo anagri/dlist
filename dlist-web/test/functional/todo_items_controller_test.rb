@@ -18,7 +18,7 @@ class TodoItemsControllerTest < ActionController::TestCase
 
   test "should create todo_item" do
     assert_difference('TodoItem.count') do
-      post :create, todo_item: { attachment: @todo_item.attachment, geo_reminder: @todo_item.geo_reminder, owner: @todo_item.owner, priority: @todo_item.priority, reminder: @todo_item.reminder, status: @todo_item.status, title: @todo_item.title }
+      post :create, todo_item: { attachment: @todo_item.attachment, geo_remind_at: @todo_item.geo_remind_at, assigned_to: @todo_item.assigned_to, priority: @todo_item.priority, remind_at: @todo_item.remind_at, status: @todo_item.status, title: @todo_item.title }
     end
 
     assert_redirected_to todo_item_path(assigns(:todo_item))
@@ -35,7 +35,7 @@ class TodoItemsControllerTest < ActionController::TestCase
   end
 
   test "should update todo_item" do
-    put :update, id: @todo_item, todo_item: { attachment: @todo_item.attachment, geo_reminder: @todo_item.geo_reminder, owner: @todo_item.owner, priority: @todo_item.priority, reminder: @todo_item.reminder, status: @todo_item.status, title: @todo_item.title }
+    put :update, id: @todo_item, todo_item: { attachment: @todo_item.attachment, geo_remind_at: @todo_item.geo_remind_at, assigned_to: @todo_item.assigned_to, priority: @todo_item.priority, remind_at: @todo_item.remind_at, status: @todo_item.status, title: @todo_item.title }
     assert_redirected_to todo_item_path(assigns(:todo_item))
   end
 

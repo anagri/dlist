@@ -1,15 +1,60 @@
-class TodoItem < ActiveRecord::Base
-  attr_accessible :attachment, :geo_reminder, :owner, :priority, :reminder, :status, :title
+class TodoItem
+  #attr_accessible :content, :uid, :revision
+  include ActiveModel::Validations
+  include ActiveModel::Conversion
+  extend ActiveModel::Naming
 
-  def self.before_create
-    name =  upload['datafile'].original_filename
-    directory = "public/data"
-    # create the file path
-    path = File.join(directory, name)
-    # write the file
-    File.open(path, "wb") { |f| f.write(upload['datafile'].read) }
+  attr_accessor :attachment, :geo_remind_at, :assigned_to, :priority, :remind_at, :status, :title, :created_at
+
+  def initialize(params = {})
+    @title = params["title"]
+    @status = params["status"]
+    @assigned_to = params["assigned to"]
+    @priority = params["priority"]
+    @remind_at = params["remind at"]
+    @geo_remind_at = params["geo remind at"]
+    @created_at = DateTime.now.strftime('%d/%m/%y %H:%M')
   end
 
+  def persisted?
+    false
+  end
+
+  def save(current_user)
+    csv = TodoItem.csv_for_user(current_user).refresh
+    csv.insert(self)
+  end
+
+  def update_attributes(current_user, params)
+    csv = TodoItem.csv_for_user(current_user)
+    if csv.updated_remotely?
+      false
+    else
+      csv.update(params[:id], params)
+      true
+    end
+  end
+
+  def destroy(current_user)
+    csv = TodoItem.csv_for_user(current_user)
+    if csv.updated_remotely?
+      return false
+    else
+      csv.destroy(params[:id])
+    end
+  end
+
+  def to_a
+    [@title, @status, @assigned_to, @priority, @remind_at, @geo_remind_at, '', @created_at]
+  end
+
+  def self.all(current_user)
+    csv_for_user(current_user).refresh.todo_items
+  end
+
+  def self.headers
+    ['title', 'status', 'assigned to', 'priority', 'remind at', 'geo remind at', 'attachments', 'created by', 'created at']
+  end
 
   def self.priorities
     [['High', 'High'], ['Medium', 'Medium'], ['Low', 'Low']]
@@ -21,5 +66,10 @@ class TodoItem < ActiveRecord::Base
 
   def self.geo_reminders
     [['None', ''], ['Home', 'Home'], ['Office', 'Office'], ['Market', 'Market']]
+  end
+
+  private
+  def self.csv_for_user(current_user)
+    CsvFile.csv_for_user(current_user)
   end
 end

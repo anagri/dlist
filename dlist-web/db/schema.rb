@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131114175013) do
+ActiveRecord::Schema.define(:version => 20131114193801) do
 
   create_table "csv_files", :primary_key => "uid", :force => true do |t|
     t.text     "content"
@@ -35,18 +35,6 @@ ActiveRecord::Schema.define(:version => 20131114175013) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
-
-  create_table "todo_items", :force => true do |t|
-    t.string   "title"
-    t.string   "owner"
-    t.string   "priority"
-    t.string   "status"
-    t.datetime "reminder"
-    t.string   "geo_reminder"
-    t.string   "attachment"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
 
   create_table "users", :id => false, :force => true do |t|
     t.integer  "uid"

@@ -13,11 +13,22 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+function zerofill(number, length) {
+    // Setup
+    var result = number.toString();
+    var pad = length - result.length;
+
+    while (pad > 0) {
+        result = '0' + result;
+        pad--;
+    }
+    return result;
+}
 
 $(function () {
     var currentDate = new Date();
     var dateFormat = currentDate.format('dd/mm/yy');
-    var hourFormat = currentDate.getHours() + ":" + (currentDate.getMinutes() - (currentDate.getMinutes() % 10));
+    var hourFormat = zerofill(currentDate.getHours(), 2) + ":" + zerofill((currentDate.getMinutes() - (currentDate.getMinutes() % 10)), 2);
     var defaultVal = dateFormat + " " + hourFormat;
     $('.date_time').each(function () {
         var $this = $(this);

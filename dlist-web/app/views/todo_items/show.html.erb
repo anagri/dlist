@@ -2,7 +2,7 @@
 
 <table class="table table-bordered table-striped">
   <% headers = ["Title", "Owner", "Priorit", "Status", "Reminder", "Geo Reminder", "Attachment"] %>
-  <% values = [@todo_item.title, @todo_item.owner, @todo_item.priority, @todo_item.status, @todo_item.reminder, @todo_item.geo_reminder, @todo_item.attachment] %>
+  <% values = [@todo_item.title, @todo_item.assigned_to, @todo_item.priority, @todo_item.status, @todo_item.remind_at, @todo_item.geo_remind_at, @todo_item.attachment] %>
   <!--<thead>-->
       <!--<tr>-->
         <!--<% headers.each do |h| %>-->
