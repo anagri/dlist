@@ -1,0 +1,35 @@
+<h1>Listing todo_items</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Owner</th>
+    <th>Priority</th>
+    <th>Status</th>
+    <th>Reminder</th>
+    <th>Geo reminder</th>
+    <th>Attachment</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @todo_items.each do |todo_item| %>
+  <tr>
+    <td><%= todo_item.title %></td>
+    <td><%= todo_item.owner %></td>
+    <td><%= todo_item.priority %></td>
+    <td><%= todo_item.status %></td>
+    <td><%= todo_item.reminder %></td>
+    <td><%= todo_item.geo_reminder %></td>
+    <td><%= todo_item.attachment %></td>
+    <td><%= link_to 'Show', todo_item %></td>
+    <td><%= link_to 'Edit', edit_todo_item_path(todo_item) %></td>
+    <td><%= link_to 'Destroy', todo_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Todo item', new_todo_item_path %>
