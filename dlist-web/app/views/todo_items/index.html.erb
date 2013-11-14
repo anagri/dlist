@@ -17,11 +17,11 @@
 <% @todo_items.each_with_index do |todo_item, i| %>
   <tr>
     <td><%= todo_item.title %></td>
-    <td><%= todo_item.owner %></td>
+    <td><%= todo_item.assigned_to %></td>
     <td><%= todo_item.priority %></td>
     <td><%= todo_item.status %></td>
-    <td><%= todo_item.reminder %></td>
-    <td><%= todo_item.geo_reminder %></td>
+    <td><%= todo_item.remind_at %></td>
+    <td><%= todo_item.geo_remind_at %></td>
     <td><%= todo_item.attachment %></td>
     <td><%= link_to 'Show', url_for(:controller => :todo_items, :action => :show, :id => i) %></td>
     <td><%= link_to 'Edit', url_for(:controller => :todo_items, :action => :edit, :id => i) %></td>

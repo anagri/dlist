@@ -16,8 +16,8 @@
     <%= f.text_field :title %>
   </div>
   <div class="field">
-    <%= f.label :owner %><br />
-    <%= f.text_field :owner %>
+    <%= f.label :assigned_to %><br />
+    <%= f.text_field :assigned_to %>
   </div>
   <div class="field">
     <%= f.label :priority %><br />
@@ -28,12 +28,12 @@
     <%= f.select :status, TodoItem.statuses, :selected => 'Pending' %>
   </div>
   <div class="field">
-    <%= f.label :reminder, 'Remind At' %><br />
-    <%= f.text_field :reminder, :class => 'date_time' %>
+    <%= f.label :remind_at, 'Remind At' %><br />
+    <%= f.text_field :remind_at, :class => 'date_time' %>
   </div>
   <div class="field">
-    <%= f.label :geo_reminder %><br />
-    <%= f.select :geo_reminder, TodoItem.geo_reminders, :selected => 'None' %>
+    <%= f.label :geo_remind_at %><br />
+    <%= f.select :geo_remind_at, TodoItem.geo_reminders, :selected => 'None' %>
   </div>
   <div class="field">
     <%= f.label :attachment %><br />

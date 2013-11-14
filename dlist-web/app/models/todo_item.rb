@@ -4,15 +4,15 @@ class TodoItem
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :attachment, :geo_reminder, :owner, :priority, :reminder, :status, :title, :created_at
+  attr_accessor :attachment, :geo_remind_at, :assigned_to, :priority, :remind_at, :status, :title, :created_at
 
   def initialize(params = {})
     @title = params["title"]
     @status = params["status"]
-    @reminder = params["reminder"]
+    @assigned_to = params["assigned to"]
     @priority = params["priority"]
-    @owner = params["owner"]
-    @geo_reminder = params["geo_reminder"]
+    @remind_at = params["remind at"]
+    @geo_remind_at = params["geo remind at"]
     @created_at = DateTime.now.strftime('%d/%m/%y %H:%M')
   end
 
@@ -45,7 +45,7 @@ class TodoItem
   end
 
   def to_a
-    [@title, @status, @owner, @priority, @reminder, @geo_reminder, '', @created_at]
+    [@title, @status, @assigned_to, @priority, @remind_at, @geo_remind_at, '', @created_at]
   end
 
   def self.all(current_user)

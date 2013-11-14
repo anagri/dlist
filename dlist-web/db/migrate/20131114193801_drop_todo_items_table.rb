@@ -9,7 +9,7 @@ class DropTodoItemsTable < ActiveRecord::Migration
       t.string :owner
       t.string :priority
       t.string :status
-      t.datetime :reminder
+      t.datetime :remind_at
       t.string :geo_reminder
       t.string :attachment
 
