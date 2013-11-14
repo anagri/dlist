@@ -2,6 +2,7 @@ DlistWeb::Application.routes.draw do
   resources :todo_items
   match '/' => 'todo_items#index'
   match '/login' => 'login#index'
+  match '/logout' => 'login#logout'
   match '/login/authenticate' => 'login#authenticate'
   # The priority is based upon order of creation:
   # first created -> highest priority.

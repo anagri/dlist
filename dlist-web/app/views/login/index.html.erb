@@ -1,1 +1,8 @@
-<%= link_to 'Login with Dropbox', @dropbox_authorize_url %>
+<% if flash[:warning] -%>
+    <div class="warning"><%= flash[:warning] %></div>
+<%- end %>
+<% unless @current_user -%>
+    <%= link_to 'Login with Dropbox', @dropbox_authorize_url %>
+<% else %>
+    Hello <%= @current_user.display_name %>, <%= link_to 'click here', :action => :logout %> to Logout.
+<%- end %>
