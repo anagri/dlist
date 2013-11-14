@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_height="100dp" >
+    <EditText 
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:hint="new task"
+        android:maxLines="5"
+        android:id="@+id/newTastContentView"/>
+	<Button 
+	    android:layout_toRightOf="@id/newTastContentView"
+	    android:id="@+id/setTaskButtonView"
+	    android:text="post"
+	    android:layout_alignParentRight="true"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"/>
+</RelativeLayout>

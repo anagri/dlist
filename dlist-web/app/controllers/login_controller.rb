@@ -1,12 +1,39 @@
 class LoginController < ApplicationController
   def index
-    @dropbox_authorize_url = get_web_auth().start()
+    unless @current_user
+      @dropbox_authorize_url = get_web_auth.start()
+    end
+  end
+
+  def logout
+    clear_dropbox_auth
+    redirect_to :action => :index
   end
 
   def authenticate
     begin
       access_token, user_id, url_state = get_web_auth.finish(params)
       session[:access_token] = access_token
+      session[:uid] = user_id
+
+      client = DropboxClient.new(session[:access_token])
+      User.where(:uid => session[:uid], :access_token => session[:access_token]).first_or_create!(:display_name => client.account_info["display_name"], :email => client.account_info["email"])
+
+      begin
+        csv_file = client.get_file_and_metadata('todo_items.csv')
+        CsvFile.where(:uid => session[:uid]).first_or_create!(:content => csv_file[0], :revision => csv_file[1]["revision"])
+      rescue DropboxAuthError => e
+        clear_dropbox_auth
+        logger.info "Dropbox auth error: #{e}"
+        render :text => "Dropbox auth error"
+        return
+      rescue DropboxError => e
+        client.put_file('todo_items.csv', 'title,status,assigned to,priority,remind at,geo remind at,attachments,created by,created at')
+
+        csv_file = client.get_file_and_metadata('todo_items.csv')
+        CsvFile.where(:uid => session[:uid]).first_or_create!(:content => csv_file[0], :revision => csv_file[1]["revision"])
+      end
+
       redirect_to :controller => 'todo_items', :action => 'index'
     rescue DropboxOAuth2Flow::BadRequestError => e
       render :text => "Error in OAuth 2 flow: Bad request: #{e}"

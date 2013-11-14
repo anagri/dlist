@@ -1,6 +1,9 @@
 class TodoItemsController < ApplicationController
   # GET /todo_items
   # GET /todo_items.json
+
+  before_filter :authenticate_or_redirect
+
   def index
     @todo_items = TodoItem.all
 
