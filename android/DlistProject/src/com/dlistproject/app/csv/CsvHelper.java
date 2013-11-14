@@ -4,6 +4,7 @@ import au.com.bytecode.opencsv.CSVWriter;
 import com.dlistproject.app.data.TodoTasksArray;
 import com.dropbox.sync.android.DbxFile;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
@@ -20,7 +21,8 @@ public class CsvHelper
 
   public void writeCsv(DbxFile dbxFile, TodoTasksArray tasksArray) throws IOException
   {
-    CSVWriter csvWriter = new CSVWriter(new OutputStreamWriter(dbxFile.getWriteStream()));
+    FileOutputStream writeStream = dbxFile.getWriteStream();
+	CSVWriter csvWriter = new CSVWriter(new OutputStreamWriter(writeStream));
     String[] taskArray = tasksArray.getHeaders().toArray(new String[]{});
     writeTaskToFile(taskArray,csvWriter);
 
@@ -28,6 +30,8 @@ public class CsvHelper
     {
       writeTaskToFile(tasksArray.getPosition(i).toStringArray(), csvWriter);
     }
+    writeStream.flush();
+    writeStream.close();
   }
 
   private void writeTaskToFile(String[] taskArray, CSVWriter csvWriter)

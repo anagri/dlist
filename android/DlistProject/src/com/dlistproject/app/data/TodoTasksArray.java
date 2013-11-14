@@ -53,9 +53,12 @@ public class TodoTasksArray
   {
     CSVReader r = new CSVReader(new InputStreamReader(inputStream));
 
-    String[] row = r.readNext();
-    for (String h : row)
-      headers.add(h);
+    String[] row = r.readNext();    
+    if(row != null)
+    {
+    	for (String h : row)
+	      headers.add(h);
+    }
 
     while((row = r.readNext()) != null)
     {

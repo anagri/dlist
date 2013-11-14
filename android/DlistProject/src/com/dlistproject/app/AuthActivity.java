@@ -74,12 +74,7 @@ public class AuthActivity extends Activity {
         		dbxFile.addListener(new Listener() {
 					@Override
 					public void onFileChange(DbxFile arg0) {
-						try {
-							Log.i("TAG","onfilechange"+arg0.getSyncStatus());
-						} catch (DbxException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						Log.i("TAG","onfilechange");
 						
 					}
 				});
@@ -99,6 +94,19 @@ public class AuthActivity extends Activity {
         }
         return true;
 
+	}
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		try {
+			dbxFs.syncNowAndWait();
+		} catch (DbxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		dbxFs.shutDown();
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -128,6 +136,7 @@ public class AuthActivity extends Activity {
 		            	if(dbxFs.exists(new DbxPath("todo_items.csv"))) {
 		            		DbxFile dbxFile = dbxFs.open(new DbxPath("todo_items.csv"));
 		            		csvHelper.writeCsv(dbxFile, todoTaskArray);
+//		            		dbxFile.writeString("asndkjsdfkjsdfbksk");
 		            		dbxFile.close();
 		            		Log.i("TAG","task added to the file");
 		            	}
