@@ -1,18 +1,9 @@
 package com.dlistproject.app;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.dlistproject.app.CsvReadHelper.TodoTasksArray;
-import com.dropbox.sync.android.DbxAccountManager;
-import com.dropbox.sync.android.DbxFile;
-import com.dropbox.sync.android.DbxFileSystem;
-import com.dropbox.sync.android.DbxPath;
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.dlistproject.app.CsvReadHelper.TodoTasksArray;
+import com.dlistproject.app.data.TodoTask;
+import com.dropbox.sync.android.DbxAccountManager;
+import com.dropbox.sync.android.DbxFile;
+import com.dropbox.sync.android.DbxFileSystem;
+import com.dropbox.sync.android.DbxPath;
 
 public class AuthActivity extends Activity {
 	private DbxAccountManager mDbxAcctMgr;

@@ -1,4 +1,4 @@
-package com.dlistproject.app;
+package com.dlistproject.app.data;
 
 /**
  * User: kaushik Date: 14/11/13 Time: 11:14 PM
@@ -93,5 +93,10 @@ public class TodoTask
   public String getCreatedAt()
   {
     return createdAt;
+  }
+
+  public String[] toStringArray()
+  {
+    return new String[]{title,status,assignedTo,priority,remindAt,geoLoc,createdBy,createdAt};
   }
 }

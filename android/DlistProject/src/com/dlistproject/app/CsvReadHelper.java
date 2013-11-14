@@ -1,8 +1,8 @@
 package com.dlistproject.app;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.dlistproject.app.data.TodoTask;
 import com.dropbox.sync.android.DbxFile;
-import com.dlistproject.app.TodoTask;
 
 import java.io.FileInputStream;
 import java.io.IOException;
