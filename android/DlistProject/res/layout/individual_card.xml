@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parentLayout"
+    android:background="#ffffff"
+    android:layout_margin="10dp"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/priorityTextView"
+        android:layout_width="15dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="#e67e22"
+        android:padding="10dp" >
+    </TextView>
+	<TextView 
+	    android:layout_toRightOf="@id/priorityTextView"
+	    android:padding="10dp"
+	    android:id="@+id/descView"
+	    android:text="kjasdhbfahsbdgasduifybsauhyfgbahfdgbusydfgusaydgfyahsdbvhasgduifysdbiuf"
+	    android:layout_height="wrap_content"
+	    android:layout_width="match_parent"/>
+	<TextView 
+	    android:id="@+id/creatorNameView"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginRight="10dp"
+	    android:textStyle="italic"
+	    android:textColor="#F1EBEB"
+	    android:layout_alignParentRight="true"
+	    android:layout_below="@id/descView"
+	    android:text="Vijay Anand"/>
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1dp"
+	    android:layout_below="@id/creatorNameView"
+	    android:id="@+id/seperatorView"
+	    android:layout_margin="10dp"
+	    android:layout_toRightOf="@id/priorityTextView"
+	    android:background="#BCBDAC"/>
+	<TextView 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/acceptButtonView"
+	    android:text="Will do it"
+	    android:paddingLeft="20dp"
+	    android:textStyle="bold"
+	    android:textColor="#5CCEEE"
+	    android:clickable="true"
+	    android:layout_toRightOf="@id/priorityTextView"
+	    android:layout_below="@id/seperatorView"
+	    android:paddingBottom="5dp" />
+	
+
+</RelativeLayout>
