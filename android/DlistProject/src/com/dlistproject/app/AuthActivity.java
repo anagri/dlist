@@ -13,8 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.dlistproject.app.CsvReadHelper.TodoTasksArray;
+import com.dlistproject.app.csv.CsvHelper;
 import com.dlistproject.app.data.TodoTask;
+import com.dlistproject.app.data.TodoTasksArray;
 import com.dropbox.sync.android.DbxAccountManager;
 import com.dropbox.sync.android.DbxFile;
 import com.dropbox.sync.android.DbxFileSystem;
@@ -64,7 +65,7 @@ public class AuthActivity extends Activity {
         	if(dbxFs.exists(new DbxPath("todo_items.csv"))) {
         		DbxFile csvFile = dbxFs.open(new DbxPath("todo_items.csv"));
         		Toast.makeText(getApplicationContext(), "file exists",Toast.LENGTH_SHORT).show();
-        		CsvReadHelper csvHelper = new CsvReadHelper();
+        		CsvHelper csvHelper = new CsvHelper();
         	    todoTaskArray = csvHelper.getTodoList(csvFile);
         	    CustomAdapter adapter = new CustomAdapter(getApplicationContext(), todoTaskArray);
         	    Log.i("TAG","setting adapter");
