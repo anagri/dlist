@@ -5,7 +5,7 @@ class TodoItemsController < ApplicationController
   before_filter :authenticate_or_redirect
 
   def index
-    @todo_items = TodoItem.all
+    @todo_items = all_items
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,7 +16,7 @@ class TodoItemsController < ApplicationController
   # GET /todo_items/1
   # GET /todo_items/1.json
   def show
-    @todo_item = TodoItem.find(params[:id])
+    @todo_item = all_items[params[:id]]
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,7 +37,7 @@ class TodoItemsController < ApplicationController
 
   # GET /todo_items/1/edit
   def edit
-    @todo_item = TodoItem.find(params[:id])
+    @todo_item = all_items[params[:id]]
   end
 
   # POST /todo_items
@@ -46,7 +46,7 @@ class TodoItemsController < ApplicationController
     @todo_item = TodoItem.new(params[:todo_item])
 
     respond_to do |format|
-      if @todo_item.save
+      if @todo_item.save(current_user)
         format.html { redirect_to @todo_item, notice: 'Todo item was successfully created.' }
         format.json { render json: @todo_item, status: :created, location: @todo_item }
       else
@@ -59,10 +59,10 @@ class TodoItemsController < ApplicationController
   # PUT /todo_items/1
   # PUT /todo_items/1.json
   def update
-    @todo_item = TodoItem.find(params[:id])
+    @todo_item = all_items[params[:id]]
 
     respond_to do |format|
-      if @todo_item.update_attributes(params[:todo_item])
+      if @todo_item.update_item(current_user, params[:todo_item])
         format.html { redirect_to @todo_item, notice: 'Todo item was successfully updated.' }
         format.json { head :no_content }
       else
@@ -75,12 +75,16 @@ class TodoItemsController < ApplicationController
   # DELETE /todo_items/1
   # DELETE /todo_items/1.json
   def destroy
-    @todo_item = TodoItem.find(params[:id])
-    @todo_item.destroy
+    @result = all_items.destroy(params[:id])
 
     respond_to do |format|
       format.html { redirect_to todo_items_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+  def all_items
+    TodoItem.all(@current_user)
   end
 end
