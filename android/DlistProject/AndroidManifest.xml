@@ -28,7 +28,7 @@
 		  android:name="com.dropbox.client2.android.AuthActivity"
 		  android:launchMode="singleTask" >
 		  <intent-filter>
-		    <data android:scheme="db-vyc3fsqjpems5dl" />
+		    <data android:scheme="db-4ul0p4hmwzmk9ah" />
 		    <action android:name="android.intent.action.VIEW" />
 		    <category android:name="android.intent.category.BROWSABLE" />
 		    <category android:name="android.intent.category.DEFAULT" />
@@ -40,7 +40,7 @@
 		  android:exported="false"
 		  android:label="Dropbox Sync" />   
 		<activity 
-		    android:name="com.dlist.LandingActivity">
+		    android:name="com.dlist.app.LandingActivity">
 		    
 		</activity> 
     </application>
