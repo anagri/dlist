@@ -1,6 +1,6 @@
 DlistWeb::Application.routes.draw do
   resources :todo_items
-
+  match '/' => 'todo_items#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

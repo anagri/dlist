@@ -21,23 +21,23 @@
   </div>
   <div class="field">
     <%= f.label :priority %><br />
-    <%= f.text_field :priority %>
+    <%= f.select :priority, TodoItem.priorities, :selected => 'Medium' %>
   </div>
   <div class="field">
     <%= f.label :status %><br />
-    <%= f.text_field :status %>
+    <%= f.select :status, TodoItem.statuses, :selected => 'Pending' %>
   </div>
   <div class="field">
-    <%= f.label :reminder %><br />
-    <%= f.datetime_select :reminder %>
+    <%= f.label :reminder, 'Remind At' %><br />
+    <%= f.text_field :reminder, :class => 'date_time' %>
   </div>
   <div class="field">
     <%= f.label :geo_reminder %><br />
-    <%= f.text_field :geo_reminder %>
+    <%= f.select :geo_reminder, TodoItem.geo_reminders, :selected => 'None' %>
   </div>
   <div class="field">
     <%= f.label :attachment %><br />
-    <%= f.text_field :attachment %>
+    <%= f.file_field :attachment %>
   </div>
   <div class="actions">
     <%= f.submit %>
