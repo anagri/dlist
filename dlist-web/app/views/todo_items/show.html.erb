@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @todo_item.title %>
+</p>
+
+<p>
+  <b>Owner:</b>
+  <%= @todo_item.owner %>
+</p>
+
+<p>
+  <b>Priority:</b>
+  <%= @todo_item.priority %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @todo_item.status %>
+</p>
+
+<p>
+  <b>Reminder:</b>
+  <%= @todo_item.reminder %>
+</p>
+
+<p>
+  <b>Geo reminder:</b>
+  <%= @todo_item.geo_reminder %>
+</p>
+
+<p>
+  <b>Attachment:</b>
+  <%= @todo_item.attachment %>
+</p>
+
+
+<%= link_to 'Edit', edit_todo_item_path(@todo_item) %> |
+<%= link_to 'Back', todo_items_path %>

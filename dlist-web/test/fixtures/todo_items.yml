@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  owner: MyString
+  priority: MyString
+  status: MyString
+  reminder: 2013-11-14 17:08:00
+  geo_reminder: MyString
+  attachment: MyString
+
+two:
+  title: MyString
+  owner: MyString
+  priority: MyString
+  status: MyString
+  reminder: 2013-11-14 17:08:00
+  geo_reminder: MyString
+  attachment: MyString

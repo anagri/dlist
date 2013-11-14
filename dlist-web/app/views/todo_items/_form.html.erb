@@ -1,0 +1,45 @@
+<%= form_for(@todo_item) do |f| %>
+  <% if @todo_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@todo_item.errors.count, "error") %> prohibited this todo_item from being saved:</h2>
+
+      <ul>
+      <% @todo_item.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :owner %><br />
+    <%= f.text_field :owner %>
+  </div>
+  <div class="field">
+    <%= f.label :priority %><br />
+    <%= f.select :priority, TodoItem.priorities, :selected => 'Medium' %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br />
+    <%= f.select :status, TodoItem.statuses, :selected => 'Pending' %>
+  </div>
+  <div class="field">
+    <%= f.label :reminder, 'Remind At' %><br />
+    <%= f.text_field :reminder, :class => 'date_time' %>
+  </div>
+  <div class="field">
+    <%= f.label :geo_reminder %><br />
+    <%= f.select :geo_reminder, TodoItem.geo_reminders, :selected => 'None' %>
+  </div>
+  <div class="field">
+    <%= f.label :attachment %><br />
+    <%= f.file_field :attachment %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
