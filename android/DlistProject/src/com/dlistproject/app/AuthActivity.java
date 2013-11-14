@@ -13,22 +13,30 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.dlistproject.app.csv.CsvHelper;
 import com.dlistproject.app.data.TodoTask;
 import com.dlistproject.app.data.TodoTasksArray;
 import com.dropbox.sync.android.DbxAccountManager;
+import com.dropbox.sync.android.DbxException;
+import com.dropbox.sync.android.DbxException.Unauthorized;
 import com.dropbox.sync.android.DbxFile;
+import com.dropbox.sync.android.DbxFile.Listener;
 import com.dropbox.sync.android.DbxFileSystem;
 import com.dropbox.sync.android.DbxPath;
+import com.dropbox.sync.android.DbxPath.InvalidPathException;
 
 public class AuthActivity extends Activity {
 	private DbxAccountManager mDbxAcctMgr;
 	TodoTasksArray todoTaskArray;
 	String descData = "";
+	DbxFileSystem dbxFs;
 	private static final String APP_KEY = "4ul0p4hmwzmk9ah";
 	private static final String APP_SECRET = "po67tpsyy9mv3lh";
 	static final int REQUEST_LINK_TO_DBX = 0;
 	ListView listCardsViewObj;
+	private CsvHelper csvHelper = new CsvHelper();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,6 +47,13 @@ public class AuthActivity extends Activity {
 		if(!mDbxAcctMgr.hasLinkedAccount()) {
 			mDbxAcctMgr.startLink((Activity)AuthActivity.this, REQUEST_LINK_TO_DBX);
 		}else {
+        	try {
+				dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
+			} catch (Unauthorized e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			setup_file();
 		}
 		Log.i("TAG","oncreate");
@@ -50,7 +65,6 @@ public class AuthActivity extends Activity {
 	    if (requestCode == REQUEST_LINK_TO_DBX) {
 	        if (resultCode == Activity.RESULT_OK) {
 	        	Log.i("TAG","worked");
-	        	setup_file();
 	        } else {
 	        	Log.i("TAG","failed");
 	            Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_SHORT).show();
@@ -61,23 +75,33 @@ public class AuthActivity extends Activity {
 	}
 	public boolean setup_file() {
         try {
-        	DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
         	if(dbxFs.exists(new DbxPath("todo_items.csv"))) {
-        		DbxFile csvFile = dbxFs.open(new DbxPath("todo_items.csv"));
+        		DbxFile dbxFile = dbxFs.open(new DbxPath("todo_items.csv"));
+        		dbxFile.addListener(new Listener() {
+					@Override
+					public void onFileChange(DbxFile arg0) {
+						try {
+							Log.i("TAG","onfilechange"+arg0.getSyncStatus());
+						} catch (DbxException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
+				});
         		Toast.makeText(getApplicationContext(), "file exists",Toast.LENGTH_SHORT).show();
-        		CsvHelper csvHelper = new CsvHelper();
-        	    todoTaskArray = csvHelper.getTodoList(csvFile);
+        	    todoTaskArray = csvHelper.getTodoList(dbxFile);
         	    CustomAdapter adapter = new CustomAdapter(getApplicationContext(), todoTaskArray);
         	    Log.i("TAG","setting adapter");
         	    listCardsViewObj.setAdapter(adapter);
-        	    csvFile.close();
+        	    dbxFile.close();
         	}else {
         		DbxFile testFile = dbxFs.create(new DbxPath("todo_items.csv"));
         		Toast.makeText(getApplicationContext(), "file created", Toast.LENGTH_SHORT).show();
         	}
-        	return false;
-        }catch(Exception e) {
+        }catch(Exception e) { 
         	Log.i("TAG","exception in DBXfile sysytem "+e.toString());
+        	return false;
         }
         return true;
 
@@ -106,6 +130,16 @@ public class AuthActivity extends Activity {
             		TodoTask todoTask =  new TodoTask();
 	            	todoTask.setTitle(data);
 	            	todoTaskArray.insert(todoTask) ;
+					try {
+		            	if(dbxFs.exists(new DbxPath("todo_items.csv"))) {
+		            		DbxFile dbxFile = dbxFs.open(new DbxPath("todo_items.csv"));
+		            		csvHelper.writeCsv(dbxFile, todoTaskArray);
+		            		dbxFile.close();
+		            		Log.i("TAG","task added to the file");
+		            	}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
             	}else {
             		Toast.makeText(getApplicationContext(), "No data", Toast.LENGTH_SHORT).show();
             	}

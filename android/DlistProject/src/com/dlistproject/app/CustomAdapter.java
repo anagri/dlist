@@ -34,7 +34,11 @@ public class CustomAdapter extends BaseAdapter {
         	convertView = inflator.inflate(R.layout.individual_card, parent,false);
         }
         TextView descViewObj = (TextView) convertView.findViewById(R.id.descView);
+        TextView creatorViewObj = (TextView) convertView.findViewById(R.id.creatorNameView);
+        TextView acceptButtonViewObj = (TextView) convertView.findViewById(R.id.acceptButtonView);
+        
         descViewObj.setText(list.getPosition(position).getTitle());
+        creatorViewObj.setText(list.getPosition(position).getCreatedBy());
         //setting the views into the ViewHolder.
         //return the row view.
         return convertView;
