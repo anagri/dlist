@@ -1,40 +1,35 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Title:</b>
-  <%= @todo_item.title %>
-</p>
+<table class="table table-bordered table-striped">
+  <% headers = ["Title", "Owner", "Priorit", "Status", "Reminder", "Geo Reminder", "Attachment"] %>
+  <% values = [@todo_item.title, @todo_item.owner, @todo_item.priority, @todo_item.status, @todo_item.reminder, @todo_item.geo_reminder, @todo_item.attachment] %>
+  <!--<thead>-->
+      <!--<tr>-->
+        <!--<% headers.each do |h| %>-->
+            <!--<th>-->
+              <!--<%= h %>-->
+            <!--</th>-->
+        <!--<% end %>-->
+      <!--</tr>-->
+  <!--</thead>-->
+  <tbody>
+      <% 0.upto(values.size-1) do |i| %>
+        <tr>
+          <td>
+            <%= headers[i] %>
+          </td>
+          <td>
+            <%= values[i] %>
+          </td>
+        </tr>
+      <% end %>
+  </tbody>
 
-<p>
-  <b>Owner:</b>
-  <%= @todo_item.owner %>
-</p>
-
-<p>
-  <b>Priority:</b>
-  <%= @todo_item.priority %>
-</p>
-
-<p>
-  <b>Status:</b>
-  <%= @todo_item.status %>
-</p>
-
-<p>
-  <b>Reminder:</b>
-  <%= @todo_item.reminder %>
-</p>
-
-<p>
-  <b>Geo reminder:</b>
-  <%= @todo_item.geo_reminder %>
-</p>
-
-<p>
-  <b>Attachment:</b>
-  <%= @todo_item.attachment %>
-</p>
+</table>
 
 
-<%= link_to 'Edit', edit_todo_item_path(@todo_item) %> |
-<%= link_to 'Back', todo_items_path %>
+<%= link_to 'Edit', edit_todo_item_path(@todo_item), {:class => "btn btn-lg btn-info"} %> |
+<%= link_to 'Back', todo_items_path, {:class => "btn btn-lg btn-info"} %> |
+
+
+<!--class="btn btn-lg btn-warning"-->
