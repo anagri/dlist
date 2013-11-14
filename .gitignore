@@ -1,8 +1,10 @@
-<<<<<<< HEAD
 .idea/
 =======
 .idea
 .rbenv-gemsets
 .ruby-version
-
->>>>>>> 5ca1e6f4259e3e4764b627e7b00571605348cc5b
+*.class
+*.jar
+.settings
+.project
+.classpath
