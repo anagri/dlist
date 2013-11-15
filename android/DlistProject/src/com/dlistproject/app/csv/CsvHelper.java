@@ -46,17 +46,19 @@ public class CsvHelper
   public void writeCsv(DbxFile dbxFile, TodoTasksArray tasksArray) throws IOException
   {
     String[] taskArray = tasksArray.getHeaders().toArray(new String[]{});
-    writeTaskToFile(taskArray,dbxFile);
+    StringBuilder sb = new StringBuilder();
+    writeTaskToFile(taskArray,sb);
 
     for (int i = 0; i < tasksArray.getCount(); i++)
     {
-      writeTaskToFile(tasksArray.getPosition(i).toStringArray(), dbxFile);
+      writeTaskToFile(tasksArray.getPosition(i).toStringArray(), sb);
     }
+    dbxFile.writeString(sb.toString());
   }
 
-  private void writeTaskToFile(String[] taskArray, DbxFile dbxFile) throws IOException
+  private void writeTaskToFile(String[] taskArray, StringBuilder sb) throws IOException
   {
-    dbxFile.writeString(getCsvLine(taskArray));
+    sb.append(getCsvLine(taskArray));
   }
 
 
