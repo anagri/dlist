@@ -1,5 +1,5 @@
 <% if @current_user -%>
-    Hello <%= @current_user.display_name %>, <%= link_to 'click here', :controller => :login, :action => :logout %> to Logout.
+    <div class="login_bar">Logged in as <%= @current_user.display_name %> | <%= link_to 'Logout', :controller => :login, :action => :logout %></div>
 <% else %>
-    <%= link_to 'Login with Dropbox', @dropbox_authorize_url %>
+    <h3 style="text-align: center">You are currently not logged in. <%= link_to 'Login with Dropbox', @dropbox_authorize_url %></h3>
 <%- end %>

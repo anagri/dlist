@@ -50,7 +50,7 @@ class TodoItemsController < ApplicationController
   def update
     respond_to do |format|
       if all_items.update(params[:id].to_i, params[:todo_item])
-        format.html { redirect_to url_for(:action => :show, :id => params[:id]), notice: 'Todo item was successfully updated.' }
+        format.html { redirect_to url_for(:action => :index), notice: 'Todo item was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

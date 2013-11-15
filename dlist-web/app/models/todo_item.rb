@@ -73,6 +73,10 @@ class TodoItem
     [['None', ''], ['Home', 'Home'], ['Office', 'Office'], ['Market', 'Market']]
   end
 
+  def self.collaborators
+    [['', 'None'], ['Don Peter <me@donpeter.in>', 'Don Peter <me@donpeter.in>'], ['Amiruddin Nagri <amir.nagri@gmail.com>','Amiruddin Nagri <amir.nagri@gmail.com>']]
+  end
+
   private
   def self.csv_for_user(current_user)
     CsvFile.csv_for_user(current_user)

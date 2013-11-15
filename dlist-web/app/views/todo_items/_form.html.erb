@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :assigned_to %><br />
-    <%= f.text_field :assigned_to %>
+    <%= f.select :assigned_to, TodoItem.collaborators, :selected => f.object.assigned_to.present? ? f.object.assigned_to : '' %>
   </div>
   <div class="field">
     <%= f.label :priority %><br />
@@ -34,10 +34,6 @@
   <div class="field">
     <%= f.label :geo_remind_at %><br />
     <%= f.select :geo_remind_at, TodoItem.geo_reminders, :selected => f.object.geo_remind_at.present? ? f.object.geo_remind_at : 'None' %>
-  </div>
-  <div class="field">
-    <%= f.label :attachment %><br />
-    <%= f.file_field :attachment %>
   </div>
   <div class="actions">
     <%= f.submit %>
