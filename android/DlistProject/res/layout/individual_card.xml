@@ -9,7 +9,6 @@
         android:id="@+id/priorityTextView"
         android:layout_width="10dp"
         android:layout_height="100dp"
-
         android:layout_alignParentLeft="true"
         android:background="#e67e22"
         android:padding="10dp" >
@@ -18,6 +17,8 @@
 	    android:layout_toRightOf="@id/priorityTextView"
 	    android:padding="10dp"
 	    android:id="@+id/descView"
+	    android:textSize="18sp"
+	    android:textColor="@android:color/secondary_text_dark"
 	    android:text="kjasdhbfahsbdgasduifybsauhyfgbahfdgbusydfgusaydgfyahsdbvhasgduifysdbiuf"
 	    android:layout_height="wrap_content"
 	    android:layout_width="match_parent"/>
@@ -51,8 +52,24 @@
 	    android:layout_toRightOf="@id/priorityTextView"
 	    android:layout_below="@id/seperatorView"
 	    android:paddingBottom="5dp" />
-	<View
+	<TextView 
+	    android:id="@+id/locationView"
+	    android:text="LOCATION"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
 	    android:layout_below="@id/acceptButtonView"
+	    android:layout_toRightOf="@id/priorityTextView"/>
+	<TextView 
+	    android:text="STATUS"
+	    android:id="@+id/statusView"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginLeft="100dp"
+	    android:layout_alignParentRight="true"
+	    android:layout_below="@id/acceptButtonView"
+	    android:layout_toRightOf="@id/locationView"/>
+	<View
+	    android:layout_below="@id/locationView"
 	    android:layout_width="match_parent"
 	    android:layout_height="10dp"
 	    android:background="#ECE5CE"/>

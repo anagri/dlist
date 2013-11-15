@@ -2,6 +2,7 @@ package com.dlistproject.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +37,22 @@ public class CustomAdapter extends BaseAdapter {
         TextView descViewObj = (TextView) convertView.findViewById(R.id.descView);
         TextView creatorViewObj = (TextView) convertView.findViewById(R.id.creatorNameView);
         TextView acceptButtonViewObj = (TextView) convertView.findViewById(R.id.acceptButtonView);
-        
+        TextView locationObj = (TextView) convertView.findViewById(R.id.locationView);
+        TextView statusObj = (TextView) convertView.findViewById(R.id.statusView);
+        TextView priorityObj = (TextView) convertView.findViewById(R.id.priorityTextView);
+        locationObj.setText(list.getPosition(position).getGeoLoc());
+        statusObj.setText(list.getPosition(position).getStatus());
+        if(list.getPosition(position).getPriority().equals("High")){
+        	priorityObj.setBackgroundColor(Color.RED);
+        }else
+        if(list.getPosition(position).getPriority().equals("Medium")) {
+        	priorityObj.setBackgroundColor(Color.YELLOW);
+        	
+        }else{
+        	priorityObj.setBackgroundColor(Color.GREEN);
+        	
+        }
         descViewObj.setText(list.getPosition(position).getTitle());
-        creatorViewObj.setText(list.getPosition(position).getCreatedBy());
         //setting the views into the ViewHolder.
         //return the row view.
         return convertView;

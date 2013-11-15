@@ -34,19 +34,11 @@ public class AuthActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_auth);
-//		startActivity(new Intent(AuthActivity.this,LandingActivity.class));
 		listCardsViewObj = (ListView) findViewById(R.id.listCardsView);
 		mDbxAcctMgr = DbxAccountManager.getInstance(getApplicationContext(), APP_KEY, APP_SECRET);
 		if(!mDbxAcctMgr.hasLinkedAccount()) {
 			mDbxAcctMgr.startLink((Activity)AuthActivity.this, REQUEST_LINK_TO_DBX);
 		}else {
-        	try {
-				dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
-			} catch (Unauthorized e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 			setup_file();
 		}
 		Log.i("TAG","oncreate");
@@ -58,6 +50,8 @@ public class AuthActivity extends Activity {
 	    if (requestCode == REQUEST_LINK_TO_DBX) {
 	        if (resultCode == Activity.RESULT_OK) {
 	        	Log.i("TAG","worked");
+	        	startActivity(new Intent(this,AuthActivity.class));
+	        	finish();
 	        } else {
 	        	Log.i("TAG","failed");
 	            Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_SHORT).show();
@@ -67,17 +61,27 @@ public class AuthActivity extends Activity {
 	    }
 	}
 	public boolean setup_file() {
+    	DbxFile dbxFile = null;
         try {
+			dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
         	if(dbxFs.exists(new DbxPath("todo_items.csv"))) {
-        		DbxFile dbxFile = dbxFs.open(new DbxPath("todo_items.csv"));
+        		dbxFile = dbxFs.open(new DbxPath("todo_items.csv"));
         		dbxFile.addListener(new Listener() {
 					@Override
 					public void onFileChange(DbxFile arg0) {
 						Log.i("TAG","onfilechange");
-						
+						try {
+							if (arg0.getNewerStatus().isCached) {
+							    arg0.update();
+							}
+						} catch (DbxException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}						
 					}
 				});
         		Toast.makeText(getApplicationContext(), "file exists",Toast.LENGTH_SHORT).show();
+        		String data = dbxFile.readString();
         	    todoTaskArray = csvHelper.getTodoList(dbxFile);
         	    CustomAdapter adapter = new CustomAdapter(getApplicationContext(), todoTaskArray);
         	    Log.i("TAG","setting adapter");
@@ -89,24 +93,15 @@ public class AuthActivity extends Activity {
         	}
         }catch(Exception e) { 
         	Log.i("TAG","exception in DBXfile sysytem "+e.toString());
+        	if(dbxFile != null) {
+        		dbxFile.close();
+        	}
         	return false;
         }
         return true;
 
 	}
 	
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		try {
-			dbxFs.syncNowAndWait();
-		} catch (DbxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		dbxFs.shutDown();
-	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId() == R.id.action_add) {
