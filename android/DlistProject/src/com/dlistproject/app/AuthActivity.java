@@ -23,7 +23,6 @@ import com.dropbox.sync.android.DbxFile.Listener;
 public class AuthActivity extends Activity {
 	private DbxAccountManager mDbxAcctMgr;
 	TodoTasksArray todoTaskArray;
-	String descData = "";
 	DbxFileSystem dbxFs;
 	private static final String APP_KEY = "4ul0p4hmwzmk9ah";
 	private static final String APP_SECRET = "po67tpsyy9mv3lh";
@@ -116,7 +115,6 @@ public class AuthActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	protected void showCustomDialog() {
-        // TODO Auto-generated method stub
         final Dialog dialog = new Dialog(AuthActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.add_new_task);
@@ -136,7 +134,6 @@ public class AuthActivity extends Activity {
 		            	if(dbxFs.exists(new DbxPath("todo_items.csv"))) {
 		            		DbxFile dbxFile = dbxFs.open(new DbxPath("todo_items.csv"));
 		            		csvHelper.writeCsv(dbxFile, todoTaskArray);
-//		            		dbxFile.writeString("asndkjsdfkjsdfbksk");
 		            		dbxFile.close();
 		            		Log.i("TAG","task added to the file");
 		            	}

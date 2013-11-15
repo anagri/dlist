@@ -7,11 +7,11 @@ public class TodoTask
 {
 
   private String title;
-  private String status;
+  private String status = "Pending";
   private String assignedTo;
-  private String priority;
+  private String priority = "Medium";
   private String remindAt;
-  private String geoLoc;
+  private String geoLoc = "Home";
   private String createdBy;
   private String createdAt;
 
